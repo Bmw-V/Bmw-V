@@ -94,17 +94,6 @@ loadstring(game:HttpGet("https://gist.github.com/someunknowndude/38cecea5be9d75c
 
 local Section = Tab:CreateSection("chat bypasser change your language to Қазақ Тілі")
 
-local Button = Tab:CreateButton({
-   Name = "chat bypass",
-   Callback = function()
-   --[[
-	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
-]]
--- set ur language to  Қазақ Тілі* 
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/AnnaRoblox/AnnaBypasser/refs/heads/main/AnnaBypasser.lua",true))()
-   end,
-})
 
 local Tab = Window:CreateTab("Game scripts", 4483362458) -- Title, Image
 
