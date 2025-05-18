@@ -43,7 +43,7 @@ Rayfield:Notify({
 
 local Slider = Tab:CreateSlider({
    Name = "Walkspeed",
-   Range = {0, 175},
+   Range = {0, 150},
    Increment = 10,
    Suffix = "speed",
    CurrentValue = 16,
@@ -69,116 +69,6 @@ local Button = Tab:CreateButton({
    Name = "Fly gui",
    Callback = function()
    loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\40\39\104\116\116\112\115\58\47\47\103\105\115\116\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\109\101\111\122\111\110\101\89\84\47\98\102\48\51\55\100\102\102\57\102\48\97\55\48\48\49\55\51\48\52\100\100\100\54\55\102\100\99\100\51\55\48\47\114\97\119\47\101\49\52\101\55\52\102\52\50\53\98\48\54\48\100\102\53\50\51\51\52\51\99\102\51\48\98\55\56\55\48\55\52\101\98\51\99\53\100\50\47\97\114\99\101\117\115\37\50\53\50\48\120\37\50\53\50\48\102\108\121\37\50\53\50\48\50\37\50\53\50\48\111\98\102\108\117\99\97\116\111\114\39\41\44\116\114\117\101\41\41\40\41\10\10")()
-   end,
-})
-
-local Tab = Window:CreateTab("Other scripts", 4483362458) -- Title, Image
-
-local Section = Tab:CreateSection("admin commands")
-
-local Button = Tab:CreateButton({
-   Name = "Infinite yield",
-   Callback = function()
-   loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
-   end,
-})
-
-local Button = Tab:CreateButton({
-   Name = "admin commands",
-   Callback = function()
-   -- The function that takes place when the button is pressed
-   -- QuirkyCMD by smokedoutlocedout, check source for full credits
-loadstring(game:HttpGet("https://gist.github.com/someunknowndude/38cecea5be9d75cb743eac8b1eaf6758/raw"))()
-   end,
-})
-
-local Section = Tab:CreateSection("chat bypasser change your language to Қазақ Тілі")
-
-local Button = Tab:CreateButton({
-   Name = "chat bypass",
-   Callback = function()
-   --[[
-	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
-]]
--- set ur language to  Қазақ Тілі* 
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/AnnaRoblox/AnnaBypasser/refs/heads/main/AnnaBypasser.lua",true))()
-   end,
-})
-
-local Tab = Window:CreateTab("Game scripts", 4483362458) -- Title, Image
-
-local Section = Tab:CreateSection("Bedwars")
-
-local Button = Tab:CreateButton({
-   Name = "Vape v4 moded",
-   Callback = function()
-   loadstring(game:HttpGet("https://raw.githubusercontent.com/VapeVoidware/vapevoidware/main/NewMainScript.lua", true))()
-   end,
-})
-
-local Section = Tab:CreateSection("Murder Mystery 2")
-
-local Button = Tab:CreateButton({
-   Name = "Mm2",
-   Callback = function()
-   loadstring(game:HttpGet("https://raw.githubusercontent.com/mzkv/mm2/refs/heads/main/xHUB", true))()
-   end,
-})
-
-local Section = Tab:CreateSection("Arsenal (gun mods)")
-
-local Button = Tab:CreateButton({
-   Name = "Arsenal",
-   Callback = function()
-   loadstring(game:HttpGet("https://raw.githubusercontent.com/Insertl/QuotasHub/main/BETAv1.3"))()
-   end,
-})
-
-local Section = Tab:CreateSection("jailbreak autorob pc/mobile")
-
-local Button = Tab:CreateButton({
-   Name = "Jailbreak",
-   Callback = function() loadstring(game:HttpGet('http://scripts.projectauto.xyz/AutoRobV5'))()
-   end,
-})
-
-local Tab = Window:CreateTab("Executors", 4483362458) -- Title, Image
-
-local Section = Tab:CreateSection("Synapse X")
-
-local Button = Tab:CreateButton({
-   Name = "Synapse X",
-   Callback = function()
-   loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/Chillz-s-scripts/main/Synapse-X-Remake.lua"))()
-   end,
-})
-
-local Section = Tab:CreateSection("Krnl")
-
-local Button = Tab:CreateButton({
-   Name = "Krnl",
-   Callback = function()
-   loadstring(game:HttpGet("https://raw.githubusercontent.com/SabrXH/KRNL-Ui-Remake/refs/heads/main/Script"))()
-   end,
-})
-
-local Tab = Window:CreateTab("Settings", 4483362458) -- Title, Image
-
-local Section = Tab:CreateSection("Credits")
-
-local Button = Tab:CreateButton({
-   Name = "Credits",
-   Callback = function()
-   Rayfield:Notify({
-   Title = "",
-   Content = "👑36kgrave and ichichitv👑",
-   Image = 4483362458,
-
-   OnClick = function()
-
-   end,
-})
    end,
 })
 
