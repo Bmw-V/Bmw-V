@@ -83,3 +83,14 @@ local Button = Tab:CreateButton({
    end,
 })
 
+local Button = Tab:CreateButton({
+   Name = "admin commands",
+   Callback = function()
+   -- The function that takes place when the button is pressed
+   -- QuirkyCMD by smokedoutlocedout, check source for full credits
+loadstring(game:HttpGet("https://gist.github.com/someunknowndude/38cecea5be9d75cb743eac8b1eaf6758/raw"))()
+   end,
+})
+
+local Section = Tab:CreateSection("chat bypasser change your language to Қазақ Тілі")
+
