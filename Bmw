@@ -143,6 +143,26 @@ local Button = Tab:CreateButton({
    end,
 })
 
+local Tab = Window:CreateTab("Executors", 4483362458) -- Title, Image
+
+local Section = Tab:CreateSection("Synapse X")
+
+local Button = Tab:CreateButton({
+   Name = "Synapse X",
+   Callback = function()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/Chillz-s-scripts/main/Synapse-X-Remake.lua"))()
+   end,
+})
+
+local Section = Tab:CreateSection("Krnl")
+
+local Button = Tab:CreateButton({
+   Name = "Krnl",
+   Callback = function()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/SabrXH/KRNL-Ui-Remake/refs/heads/main/Script"))()
+   end,
+})
+
 local Tab = Window:CreateTab("Settings", 4483362458) -- Title, Image
 
 local Section = Tab:CreateSection("Credits")
@@ -152,7 +172,7 @@ local Button = Tab:CreateButton({
    Callback = function()
    Rayfield:Notify({
    Title = "",
-   Content = "36kgrave and ichichitv",
+   Content = "👑36kgrave and ichichitv👑",
    Image = 4483362458,
 
    OnClick = function()
