@@ -94,7 +94,6 @@ loadstring(game:HttpGet("https://gist.github.com/someunknowndude/38cecea5be9d75c
 
 local Section = Tab:CreateSection("chat bypasser change your language to Қазақ Тілі")
 
-
 local Tab = Window:CreateTab("Game scripts", 4483362458) -- Title, Image
 
 local Section = Tab:CreateSection("Bedwars")
