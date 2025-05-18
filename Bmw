@@ -204,7 +204,7 @@ local Button = Tab:CreateButton({
    Callback = function()
    Rayfield:Notify({
    Title = "Scripter/idea",
-   Content = "👑Scripter is 36kgrave and ideas are from ichichitv👑",
+   Content = "👑Scripter👑",
    Duration = 5,
    Image = 4483362458,
 })
