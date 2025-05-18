@@ -108,15 +108,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/AnnaRoblox/AnnaBypass
 
 local Tab = Window:CreateTab("Game scripts", 4483362458) -- Title, Image
 
-local Section = Tab:CreateSection("Bedwars")
-
-local Button = Tab:CreateButton({
-   Name = "Vape v4 moded",
-   Callback = function()
-   loadstring(game:HttpGet("https://raw.githubusercontent.com/VapeVoidware/vapevoidware/main/NewMainScript.lua", true))()
-   end,
-})
-
 local Section = Tab:CreateSection("Murder Mystery 2")
 
 local Button = Tab:CreateButton({
