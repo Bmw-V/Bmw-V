@@ -74,45 +74,6 @@ local Button = Tab:CreateButton({
 
 local Player = game.Players.LocalPlayer
 
-local TeleportTab = Window:CreateTab("Teleport", 4483362458)
-
-local TeleportSection = TeleportTab:CreateSection("Choose Player")
-
-local playerNames = {}
-
-local selectedPlayer = nil
-
-local function updatePlayerList()
-    table.clear(playerNames)
-    for _, plr in pairs(game.Players:GetPlayers()) do
-        if plr ~= game.Players.LocalPlayer then
-            table.insert(playerNames, plr.Name)
-        end
-    end
-end
-
-updatePlayerList()
-
-local dropdown = TeleportTab:CreateDropdown({
-    Name = "Select Player",
-    Options = playerNames,
-    CurrentOption = playerNames[1] or "None",
-    Flag = "SelectedPlayer",
-    Callback = function(Option)
-        selectedPlayer = Option
-    end
-})
-
-game.Players.PlayerAdded:Connect(function()
-    updatePlayerList()
-    dropdown:SetOptions(playerNames)
-end)
-
-game.Players.PlayerRemoving:Connect(function()
-    updatePlayerList()
-    dropdown:SetOptions(playerNames)
-end)
-
 local Tab = Window:CreateTab("Other scripts", 4483362458) -- Title, Image
 
 local Section = Tab:CreateSection("👑admin commands👑")
