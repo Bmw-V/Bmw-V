@@ -72,27 +72,39 @@ local Button = Tab:CreateButton({
    end,
 })
 
-local PLIST = {}
+local playerNames = {}
+local selectedPlayer = nil
 
-for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-    table.insert(PLIST,v.DisplayName)
+local function updatePlayerList()
+    table.clear(playerNames)
+    for _, plr in pairs(game.Players:GetPlayers()) do
+        if plr ~= game.Players.LocalPlayer then
+            table.insert(playerNames, plr.Name)
+        end
+    end
 end
 
-Tab:AddDropdown({
-	Name = "Players",
-	Default = "",
-	Options = {},
-	Callback = function(Value)
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  game.Players[value].Character.HumanoidRootPart.CFrame * CFrame.new(0,2,1)
-	end    
+updatePlayerList()
+
+local dropdown = TeleportTab:CreateDropdown({
+    Name = "Select Player",
+    Options = playerNames,
+    CurrentOption = playerNames[1] or "None",
+    Flag = "SelectedPlayer",
+    Callback = function(Option)
+        selectedPlayer = Option
+    end
 })
 
---[[
-Name = <string> - The name of the dropdown.
-Default = <string> - The default value of the dropdown.
-Options = <table> - The options in the dropdown.
-Callback = <function> - The function of the dropdown.
-]]
+game.Players.PlayerAdded:Connect(function()
+    updatePlayerList()
+    dropdown:SetOptions(playerNames)
+end)
+
+game.Players.PlayerRemoving:Connect(function()
+    updatePlayerList()
+    dropdown:SetOptions(playerNames)
+end)
 
 local Tab = Window:CreateTab("Other scripts", 4483362458) -- Title, Image
 
