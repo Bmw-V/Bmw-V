@@ -72,10 +72,16 @@ local Button = Tab:CreateButton({
    end,
 })
 
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Player = game.Players.LocalPlayer
+
 local TeleportTab = Window:CreateTab("Teleport", 4483362458)
+
 local TeleportSection = TeleportTab:CreateSection("Choose Player")
 
 local playerNames = {}
+
 local selectedPlayer = nil
 
 local function updatePlayerList()
