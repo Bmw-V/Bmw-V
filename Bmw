@@ -3,9 +3,9 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Player = game.Players.LocalPlayer
 
 local Window = Rayfield:CreateWindow({
-   Name = "Bmw v3",
+   Name = "Bmw v3(Beta)",
    Icon = 4483362458, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
-   LoadingTitle = "👑Bmw v3 Premium👑",
+   LoadingTitle = "👑‘‘Bmw v3 Premium👑‘‘",
    LoadingSubtitle = "by Palawan",
    Theme = "DarkBlue", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
@@ -20,13 +20,13 @@ local Window = Rayfield:CreateWindow({
 
    KeySystem = true, -- Set this to true to use our key system
    KeySettings = {
-      Title = "🗿Bmw v3🗿",
-      Subtitle = "Key system 🗝",
-      Note = "👑Premium Version Beta currently👑", -- Use this to tell the user how to get a key
+      Title = "Bmw v3(Beta)",
+      Subtitle = "Key system",
+      Note = "👑‘‘Premium Version Beta currently👑‘‘", -- Use this to tell the user how to get a key
       FileName = "Key system", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
       SaveKey = nil, -- The user's key will be saved, but if you change the key, they will be unable to use your script
       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-      Key = {"Palawan","Bmw","Key"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+      Key = {"Palawan","Bmw"," "} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
    }
 })
 
@@ -43,7 +43,7 @@ Rayfield:Notify({
 
 local Slider = Tab:CreateSlider({
    Name = "Walkspeed",
-   Range = {0, 150},
+   Range = {0, 100},
    Increment = 10,
    Suffix = "speed",
    CurrentValue = 16,
@@ -72,6 +72,19 @@ local Button = Tab:CreateButton({
    end,
 })
 
+local Input = Tab:CreateInput({
+   Name = "Players",
+   CurrentValue = "",
+   PlaceholderText = "Input Placeholder",
+   RemoveTextAfterFocusLost = false,
+   Flag = "Input1",
+   Callback = function(Text)
+   local p1 = game.Players.LocalPlayer.Character.HumanoidRootPart
+p2 = PlaceholderText
+p1.CFrame = game.Players[p2].Character.HumanoidRootPart.CFrame
+   end,
+})
+
 local Tab = Window:CreateTab("Other scripts", 4483362458) -- Title, Image
 
 local Section = Tab:CreateSection("admin commands")
@@ -92,7 +105,7 @@ loadstring(game:HttpGet("https://gist.github.com/someunknowndude/38cecea5be9d75c
    end,
 })
 
-local Section = Tab:CreateSection("chat bypasser change your language to Қазақ Тілі)
+local Section = Tab:CreateSection("chat bypasser change your language to ÒšÐ°Ð·Ð°Ò› Ð¢Ñ–Ð»Ñ–")
 
 local Button = Tab:CreateButton({
    Name = "chat bypass",
@@ -100,13 +113,22 @@ local Button = Tab:CreateButton({
    --[[
 	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
 ]]
--- set ur language to  Қазақ Тілі* 
+-- set ur language to  Қазақ Тілі
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnnaRoblox/AnnaBypasser/refs/heads/main/AnnaBypasser.lua",true))()
    end,
 })
 
 local Tab = Window:CreateTab("Game scripts", 4483362458) -- Title, Image
+
+local Section = Tab:CreateSection("Bedwars")
+
+local Button = Tab:CreateButton({
+   Name = "Vape v4 moded",
+   Callback = function()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/VapeVoidware/vapevoidware/main/NewMainScript.lua", true))()
+   end,
+})
 
 local Section = Tab:CreateSection("Murder Mystery 2")
 
@@ -130,7 +152,8 @@ local Section = Tab:CreateSection("jailbreak autorob pc/mobile")
 
 local Button = Tab:CreateButton({
    Name = "Jailbreak",
-   Callback = function() loadstring(game:HttpGet('http://scripts.projectauto.xyz/AutoRobV5'))()
+   Callback = function()
+ loadstring(game:HttpGet('http://scripts.projectauto.xyz/AutoRobV5'))()
    end,
 })
 
@@ -163,8 +186,15 @@ local Button = Tab:CreateButton({
    Callback = function()
    Rayfield:Notify({
    Title = "",
-   Content = "👑36kgrave and ichichitv👑",
+   Content = "👑36kgrave and ichichitv👑",
    Image = 4483362458,
+
+   OnClick = function()
+
+   end,
+})
+   end,
+})
 
 local Button = Tab:CreateButton({
    Name = "Tester",
@@ -179,17 +209,6 @@ local Button = Tab:CreateButton({
 })
 
 local Section = Tab:CreateSection("scripter/ideas")
-
-local Button = Tab:CreateButton({
-   Name = "scripter/ideas",
-   Callback = function()
-   Rayfield:Notify({
-   Title = "Scripter/idea",
-   Content = "👑Scripter👑",
-   Duration = 5,
-   Image = 4483362458,
-})
-})
 
 local Section = Tab:CreateSection("user checker")
 
