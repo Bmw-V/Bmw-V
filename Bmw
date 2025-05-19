@@ -224,3 +224,39 @@ local Button = Tab:CreateButton({
 })
    end,
 })
+
+
+local Tab = Window:CreateTab("Player Info", 4483362458)
+
+local PlayerDropdown = Tab:CreateDropdown({
+    Name = "Select Player",
+    Options = {},
+    CurrentOption = {},
+    MultipleOptions = false,
+    SpecialType = "Player",
+    Flag = "PlayerDropdown",
+    Callback = function(Option)
+        print("Selected player: " .. Option.Name)
+    end
+})
+
+-- Refresh the dropdown options to reflect current players
+local function refreshPlayerList()
+    local playerList = {}
+    for _, player in ipairs(game.Players:GetPlayers()) do
+        table.insert(playerList, player.Name)
+    end
+    PlayerDropdown:Refresh(playerList, playerList[1])
+end
+
+-- Initial population of the dropdown
+refreshPlayerList()
+
+-- Update the dropdown options when players join or leave
+game.Players.PlayerAdded:Connect(function()
+    refreshPlayerList()
+end)
+
+game.Players.PlayerRemoving:Connect(function()
+    refreshPlayerList()
+end)
