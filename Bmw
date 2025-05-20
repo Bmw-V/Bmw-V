@@ -72,8 +72,6 @@ local Button = Tab:CreateButton({
    end,
 })
 
-local Player = game.Players.LocalPlayer
-
 local Tab = Window:CreateTab("Other scripts", 4483362458) -- Title, Image
 
 local Section = Tab:CreateSection("👑admin commands👑")
