@@ -5,7 +5,7 @@ local Player = game.Players.LocalPlayer
 local Window = Rayfield:CreateWindow({
    Name = "Bmw v3(Beta)",
    Icon = 4483362458, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
-   LoadingTitle = "👑‘‘Bmw v3 PremiumOnly👑‘‘",
+   LoadingTitle = "👑Bmw v3 PremiumOnly👑",
    LoadingSubtitle = "👑by Palawan👑",
    Theme = "Nord", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
@@ -258,52 +258,51 @@ game.Players.PlayerRemoving:Connect(function()
     refreshPlayerList()
 end)
 
--- Create the Teleport tab
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local targetName = ""
+
 local Tab = Window:CreateTab("Teleport", 4483362458)
+Tab:CreateSection("Teleport Options")
 
--- Variable to store input text
-local inputName = ""
-
--- Create the input box (adaptive for username/display name)
+-- Store input separately since we can't use InputBox:Set()
 Tab:CreateInput({
-   Name = "Player Name or Display Name",
-   PlaceholderText = "Enter a username or display name",
-   RemoveTextAfterFocusLost = false,
-   Callback = function(txt)
-      inputName = txt
-   end
+    Name = "Player Name",
+    PlaceholderText = "Type display name or username",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(input)
+        targetName = input
+    end
 })
 
--- Teleport button
 Tab:CreateButton({
-   Name = "Teleport",
-   Callback = function()
-      local Players = game:GetService("Players")
-      local me = Players.LocalPlayer
-      local foundPlayer = nil
+    Name = "Teleport",
+    Callback = function()
+        local matchedPlayer = nil
+        for _, player in ipairs(Players:GetPlayers()) do
+            local displayName = player.DisplayName:lower()
+            local username = player.Name:lower()
+            local input = targetName:lower()
 
-      for _, player in ipairs(Players:GetPlayers()) do
-         if player.Name:lower() == inputName:lower() or player.DisplayName:lower() == inputName:lower() then
-            foundPlayer = player
-            break
-         end
-      end
+            if string.find(displayName, input) or string.find(username, input) then
+                matchedPlayer = player
+                break
+            end
+        end
 
-      if foundPlayer and foundPlayer.Character and foundPlayer.Character:FindFirstChild("HumanoidRootPart") and me.Character and me.Character:FindFirstChild("HumanoidRootPart") then
-         me.Character.HumanoidRootPart.CFrame = foundPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
-         Rayfield:Notify({
-            Title = "Success",
-            Content = "Teleported to " .. foundPlayer.Name,
-            Duration = 2
-         })
-      else
-         Rayfield:Notify({
-            Title = "Error",
-            Content = "Player not found or character not ready",
-            Duration = 2
-         })
-      end
-   end
+        if matchedPlayer and matchedPlayer.Character and matchedPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            LocalPlayer.Character:SetPrimaryPartCFrame(matchedPlayer.Character.HumanoidRootPart.CFrame)
+            Rayfield:Notify({
+                Title = "Teleported!",
+                Content = "Teleported to " .. matchedPlayer.DisplayName,
+                Duration = 3
+            })
+        else
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "Player not found or character not loaded.",
+                Duration = 3
+            })
+        end
+    end
 })
-
---works
