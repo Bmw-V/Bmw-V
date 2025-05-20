@@ -1,7 +1,6 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
-local player = game.Players.LocalPlayer
-Player = LocalPlayer
+local Player = game.Players.LocalPlayer
 
 local Window = Rayfield:CreateWindow({
    Name = "Bmw v3(Beta)",
