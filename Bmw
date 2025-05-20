@@ -223,50 +223,21 @@ local Button = Tab:CreateButton({
    end,
 })
 
-local PlayerDropdown = Tab:CreateDropdown({
-    Name = "Select Player",
-    Options = {},
-    CurrentOption = {},
-    MultipleOptions = false,
-    SpecialType = "Player",
-    Flag = "PlayerDropdown",
-    Callback = function(Option)
-        print("Selected player: " .. Option.Name)
-    end
-})
-
--- Refresh the dropdown options to reflect current players
-local function refreshPlayerList()
-    local playerList = {}
-    for _, player in ipairs(game.Players:GetPlayers()) do
-        table.insert(playerList, player.Name)
-    end
-    PlayerDropdown:Refresh(playerList, playerList[1])
-end
-
--- Initial population of the dropdown
-refreshPlayerList()
-
--- Update the dropdown options when players join or leave
-game.Players.PlayerAdded:Connect(function()
-    refreshPlayerList()
-end)
-
-game.Players.PlayerRemoving:Connect(function()
-    refreshPlayerList()
-end)
-
 local Players = game:GetService("Players")
 local lp = Players.LocalPlayer
 
 local function findClosestMatch(input)
+    if not input or input == "" then return nil end
     input = input:lower()
     local bestMatch, bestScore = nil, 0
     for _, plr in ipairs(Players:GetPlayers()) do
-        local name = plr.DisplayName:lower()
-        local score = #input
-        if name:sub(1, #input) == input and score > bestScore then
-            bestMatch, bestScore = plr, score
+        if plr ~= lp then -- Skip local player
+            local name = plr.Name:lower() -- Using Name instead of DisplayName for more reliable matching
+            local displayName = plr.DisplayName:lower()
+            local score = #input
+            if (name:sub(1, #input) == input or displayName:sub(1, #input) == input) and score > bestScore then
+                bestMatch, bestScore = plr, score
+            end
         end
     end
     return bestMatch
@@ -274,20 +245,41 @@ end
 
 local chosenName = ""
 
-tab:CreateInput({
-    Name = "Player Display Name",
-    PlaceholderText = "Type a name",
-    Callback = function(text)
-        chosenName = text
-    end
+local Tab = Window:CreateTab("TP test", 4483362458)
+
+local Input = Tab:CreateInput({
+   Name = "User",
+   CurrentValue = "",
+   PlaceholderText = "Name",
+   RemoveTextAfterFocusLost = false,
+   Flag = "Input1",
+   Callback = function(Text)
+       chosenName = Text -- Fixed: was using lowercase 'text' instead of 'Text'
+   end,
 })
 
-tab:CreateButton({
-    Name = "Teleport to Player",
-    Callback = function()
-        local target = findClosestMatch(chosenName)
-        if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
-            lp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(0,3,0)
-        end
-    end
+local Button = Tab:CreateButton({
+   Name = "Teleport",
+   Callback = function()
+       if not lp.Character or not lp.Character:FindFirstChild("HumanoidRootPart") then return end
+       
+       local target = findClosestMatch(chosenName)
+       if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
+           lp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(0,3,0)
+       else
+           Rayfield:Notify({
+               Title = "Teleport Failed",
+               Content = "Could not find target player or their character",
+               Duration = 6.5,
+               Image = 0,
+               Actions = {
+                   Ignore = {
+                       Name = "Okay",
+                       Callback = function()
+                       end
+                   },
+               },
+           })
+       end
+   end,
 })
