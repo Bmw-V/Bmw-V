@@ -272,8 +272,8 @@ Tab:CreateInput({
 Tab:CreateButton({
    Name = "Teleport",
    Callback = function()
-      local target = PlayerDropdown
+      local target = PlaceholderText
       if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
-         me.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
+         LocalPlayer.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
    end
 })
