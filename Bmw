@@ -275,7 +275,6 @@ end
 
 local chosenName = ""
 
-local win = Rayfield:CreateWindow({Name="TP Menu",Theme="Default"})
 local tab = win:CreateTab("TP", 4483362458)
 
 tab:CreateInput({
