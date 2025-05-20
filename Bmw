@@ -256,7 +256,6 @@ game.Players.PlayerRemoving:Connect(function()
     refreshPlayerList()
 end)
 
-local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
 local Players = game:GetService("Players")
 local lp = Players.LocalPlayer
 
