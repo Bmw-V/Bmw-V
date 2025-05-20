@@ -129,11 +129,10 @@ local Button = Tab:CreateButton({
    Name = "Teleport",
    Callback = function()
        if not lp.Character or not lp.Character:FindFirstChild("HumanoidRootPart") then return end
-
-       if
+       
        local target = findClosestMatch(chosenName)
        if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
-           lp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(0,3,0) then
+           lp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(0,3,0)
            Rayfield:Notify({
                Title = "Teleported",
                Content = "You teleported to "..Player.targetNames.."",
