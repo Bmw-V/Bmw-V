@@ -72,7 +72,9 @@ local Button = Tab:CreateButton({
    end,
 })
 
-local Section = Tab:CreateSection("Teleport")
+local Tab = Window:CreateTab("Teleport", 4483362458) -- Title, Image
+
+local Section = Tab:CreateSection("Teleport options")
 
 Tab:CreateInput({
     Name = "Player Name",
