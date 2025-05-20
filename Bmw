@@ -1,7 +1,5 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
-local Player = game.Players.LocalPlayer
-
 local Window = Rayfield:CreateWindow({
    Name = "Bmw v3(Beta)",
    Icon = 4483362458, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
@@ -20,9 +18,9 @@ local Window = Rayfield:CreateWindow({
 
    KeySystem = true, -- Set this to true to use our key system
    KeySettings = {
-      Title = "👑Bmw-V v3(Beta)👑",
+      Title = "🗝Key system 🗝",
       Subtitle = "🔐",
-      Note = "👑‘‘Premium Version Beta currently👑‘‘", -- Use this to tell the user how to get a key
+      Note = "👑Premium Version Beta currently👑", -- Use this to tell the user how to get a key
       FileName = "Key system", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
       SaveKey = nil, -- The user's key will be saved, but if you change the key, they will be unable to use your script
       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
@@ -40,6 +38,8 @@ Rayfield:Notify({
    Duration = 6.5,
    Image = 4483362458,
 })
+
+local Section = Tab:CreateSection("Welcome 🌑" ..Player.Name.."🌑")
 
 local Slider = Tab:CreateSlider({
    Name = "Walkspeed",
@@ -70,6 +70,72 @@ local Button = Tab:CreateButton({
    Callback = function()
    loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\40\39\104\116\116\112\115\58\47\47\103\105\115\116\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\109\101\111\122\111\110\101\89\84\47\98\102\48\51\55\100\102\102\57\102\48\97\55\48\48\49\55\51\48\52\100\100\100\54\55\102\100\99\100\51\55\48\47\114\97\119\47\101\49\52\101\55\52\102\52\50\53\98\48\54\48\100\102\53\50\51\51\52\51\99\102\51\48\98\55\56\55\48\55\52\101\98\51\99\53\100\50\47\97\114\99\101\117\115\37\50\53\50\48\120\37\50\53\50\48\102\108\121\37\50\53\50\48\50\37\50\53\50\48\111\98\102\108\117\99\97\116\111\114\39\41\44\116\114\117\101\41\41\40\41\10\10")()
    end,
+})
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local targetName = ""
+
+local Window = Rayfield:CreateWindow({
+    Name = "Teleport to Player",
+    ConfigurationSaving = {
+        Enabled = true,
+        FileName = "TeleportToPlayer"
+    }
+})
+
+local Tab = Window:CreateTab("Teleport", 4483362458)
+Tab:CreateSection("Teleport Options")
+
+-- Store input separately since we can't use InputBox:Set()
+Tab:CreateInput({
+    Name = "Player Name",
+    PlaceholderText = "Type display name or username",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(input)
+        targetName = input
+    end
+})
+
+Tab:CreateButton({
+    Name = "Teleport",
+    Callback = function()
+        local matchedPlayer = nil
+        for _, player in ipairs(Players:GetPlayers()) do
+            local displayName = player.DisplayName:lower()
+            local username = player.Name:lower()
+            local input = targetName:lower()
+
+            if string.find(displayName, input) or string.find(username, input) then
+                matchedPlayer = player
+                break
+            end
+        end
+        
+        -- Button to teleport
+Tab:CreateButton({
+    Name = "Teleport",
+    Callback = function()
+        teleportToPlayer(InputBox.CurrentValue)
+        InputBox:Set("", true) -- This clears the input after teleporting
+    end
+})
+
+        if matchedPlayer and matchedPlayer.Character and matchedPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            LocalPlayer.Character:SetPrimaryPartCFrame(matchedPlayer.Character.HumanoidRootPart.CFrame)
+            Rayfield:Notify({
+                Title = "Teleported!",
+                Content = "Teleported to " .. matchedPlayer.DisplayName,
+                Duration = 3
+            })
+        else
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "Player not found or character not loaded.",
+                Duration = 3
+            })
+        end
+    end
 })
 
 local Tab = Window:CreateTab("Other scripts", 4483362458) -- Title, Image
