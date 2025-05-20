@@ -274,12 +274,6 @@ end
 
 local chosenName = ""
 
-local Tab = Window:CreateTab({
-   Name = 'Tp',
-   Icon = 0,
-   Etc = 'more stuff idk,
-}) -- Title, Image
-
 tab:CreateInput({
     Name = "Player Display Name",
     PlaceholderText = "Type a name",
