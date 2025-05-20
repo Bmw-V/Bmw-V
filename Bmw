@@ -1,5 +1,7 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
+local player = game.Players.LocalPlayer
+
 local Window = Rayfield:CreateWindow({
    Name = "Bmw v3(Beta)",
    Icon = 4483362458, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
@@ -29,8 +31,6 @@ local Window = Rayfield:CreateWindow({
 })
 
 Tab = Window:CreateTab("Movement", 4483362458) -- Title, Image
-
-local player = game.Players.LocalPlayer
 
 local Section = Tab:CreateSection("Welcome, " ..Player.Name.."")
 
