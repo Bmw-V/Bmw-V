@@ -290,7 +290,6 @@ Tab:CreateButton({
             end
         end
 
-        InputBox:Set("", true) -- This clears the input after teleporting
         if matchedPlayer and matchedPlayer.Character and matchedPlayer.Character:FindFirstChild("HumanoidRootPart") then
             LocalPlayer.Character:SetPrimaryPartCFrame(matchedPlayer.Character.HumanoidRootPart.CFrame)
             Rayfield:Notify({
