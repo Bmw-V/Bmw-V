@@ -274,7 +274,7 @@ end
 
 local chosenName = ""
 
-local tab = win:CreateTab("Secret (beta)", 4483362458)
+local tab = CreateTab("Secret (beta)", 4483362458)
 
 tab:CreateInput({
     Name = "Player Display Name",
