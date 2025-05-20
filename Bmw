@@ -275,7 +275,6 @@ end
 
 local chosenName = ""
 
-local win = Rayfield:CreateWindow({Name="Bmw v3",Theme="Default"})
 local tab = win:CreateTab("Secret (beta)", 4483362458)
 
 tab:CreateInput({
