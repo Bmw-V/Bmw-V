@@ -275,20 +275,25 @@ end
 
 local chosenName = ""
 
-tab:CreateInput({
-    Name = "Player Display Name",
-    PlaceholderText = "Type a name",
-    Callback = function(text)
-        chosenName = text
-    end
+local Input = Tab:CreateInput({
+   Name = "Teleport",
+   PlaceholderText = "Player user or display name",
+   NumbersOnly = true, -- If the user can only type numbers. Remove or set to false if none.
+   CharacterLimit = 15, --max character limit. Remove or set to false
+   OnEnter = true, -- Will callback only if the user pressed ENTER while being focused on the the box.
+   RemoveTextAfterFocusLost = false, -- Speaks for itself.
+   Callback = function(Text)
+   chosenName = text
+   end,
 })
 
-tab:CreateButton({
-    Name = "Teleport to Player",
-    Callback = function()
-        local target = findClosestMatch(chosenName)
+local Button = Tab:CreateButton({
+   Name = "Teleport",
+   Interact = 'Click',
+   Callback = function()
+   local target = findClosestMatch(chosenName)
         if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
             lp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(0,3,0)
         end
-    end
+   end,
 })
