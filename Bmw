@@ -268,3 +268,19 @@ Tab:CreateInput({
       targetName = txt
    end
 })
+
+Tab:CreateButton({
+   Name = "Teleport",
+   Callback = function()
+      local Players = game:GetService("Players")
+      local me = Players.LocalPlayer
+      local target = Players:FindFirstChild(targetName)
+
+      if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
+         me.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
+         Rayfield:Notify({Title = "Done", Content = "Teleported to " .. targetName, Duration = 2})
+      else
+         Rayfield:Notify({Title = "Error", Content = "Player not found", Duration = 2})
+      end
+   end
+})
