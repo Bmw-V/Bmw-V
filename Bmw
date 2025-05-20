@@ -30,6 +30,8 @@ local Window = Rayfield:CreateWindow({
 
 Tab = Window:CreateTab("Movement", 4483362458) -- Title, Image
 
+local Player = game.Players.LocalPlayer
+
 local Section = Tab:CreateSection("Welcome, " ..Player.Name.."")
 
 Rayfield:Notify({
