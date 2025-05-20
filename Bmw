@@ -260,20 +260,14 @@ end)
 
 local targetName = ""
 
-Tab:CreateInput({
-   Name = "Player Name",
-   PlaceholderText = "Type name",
-   RemoveTextAfterFocusLost = false,
-   Callback = function(txt)
-      targetName = txt
-   end
-})
-
-Tab:CreateButton({
+local Button = Tab:CreateButton({
    Name = "Teleport",
+   Interact = 'Click',
    Callback = function()
-      local target = PlaceholderText
-      if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
-         LocalPlayer.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
-   end
+   -- The function that takes place when the button is pressed
+   if targetName = PlayerDropdown then
+   LocalPlayer = targetName.Character.HumanoidRootPart.CFrame
+   else
+   print("Failed")
+   end,
 })
