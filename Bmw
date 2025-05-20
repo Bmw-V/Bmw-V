@@ -72,60 +72,47 @@ local Button = Tab:CreateButton({
    end,
 })
 
-local Tab = Window:CreateTab("Teleport", 4483362458) -- Title, Image
-
-local Section = Tab:CreateSection("Teleport options")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local targetName = ""
 
 Tab:CreateInput({
-    Name = "Player Name",
-    PlaceholderText = "Type display name or username",
-    RemoveTextAfterFocusLost = false,
-    Callback = function(input)
-        targetName = input
-    end
-})
-
-Tab:CreateButton({
-    Name = "Teleport",
-    Callback = function()
-        local matchedPlayer = nil
-        for _, player in ipairs(Players:GetPlayers()) do
-            local displayName = player.DisplayName:lower()
-            local username = player.Name:lower()
-            local input = targetName:lower()
-
-            if string.find(displayName, input) or string.find(username, input) then
-                matchedPlayer = player
-                break
-            end
-        end
-        
-        -- Button to teleport
-Tab:CreateButton({
-    Name = "Teleport",
-    Callback = function()
-        teleportToPlayer(InputBox.CurrentValue)
-        InputBox:Set("", true) -- This clears the input after teleporting
+    Name = "Player Name",
+    PlaceholderText = "Type display name or username",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(input)
+        targetName = input
     end
 })
 
-        if matchedPlayer and matchedPlayer.Character and matchedPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            LocalPlayer.Character:SetPrimaryPartCFrame(matchedPlayer.Character.HumanoidRootPart.CFrame)
-            Rayfield:Notify({
-                Title = "Teleported!",
-                Content = "Teleported to " .. matchedPlayer.DisplayName,
-                Duration = 3
-            })
-        else
-            Rayfield:Notify({
-                Title = "Error",
-                Content = "Player not found or character not loaded.",
-                Duration = 3
-            })
-        end
-    end
-})
+Tab:CreateButton({
+    Name = "Teleport",
+    Callback = function()
+        local matchedPlayer = nil
+        for _, player in ipairs(Players:GetPlayers()) do
+            if string.find(player.DisplayName:lower(), targetName:lower()) or string.find(player.Name:lower(), targetName:lower()) then
+                matchedPlayer = player
+                break
+            end
+        end
 
+        if matchedPlayer and matchedPlayer.Character and matchedPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            LocalPlayer.Character:SetPrimaryPartCFrame(matchedPlayer.Character.HumanoidRootPart.CFrame)
+            Rayfield:Notify({
+                Title = "Teleported!",
+                Content = "Teleported to " .. matchedPlayer.DisplayName,
+                Duration = 3
+            })
+            targetName = "" -- Clear after teleport
+        else
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "Player not found or character not loaded.",
+                Duration = 3
+            })
+        end
+    end
+})
 
 local Player = game.Players.LocalPlayer
 
@@ -312,7 +299,3 @@ end)
 game.Players.PlayerRemoving:Connect(function()
     refreshPlayerList()
 end)
-
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local targetName = ""
