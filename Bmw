@@ -257,3 +257,14 @@ end)
 game.Players.PlayerRemoving:Connect(function()
     refreshPlayerList()
 end)
+
+local targetName = ""
+
+Tab:CreateInput({
+   Name = "Player Name",
+   PlaceholderText = "Type name",
+   RemoveTextAfterFocusLost = false,
+   Callback = function(txt)
+      targetName = txt
+   end
+})
