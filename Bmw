@@ -290,6 +290,7 @@ Tab:CreateButton({
             end
         end
 
+
         if matchedPlayer and matchedPlayer.Character and matchedPlayer.Character:FindFirstChild("HumanoidRootPart") then
             LocalPlayer.Character:SetPrimaryPartCFrame(matchedPlayer.Character.HumanoidRootPart.CFrame)
             Rayfield:Notify({
