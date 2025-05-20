@@ -76,6 +76,8 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local targetName = ""
 
+local Tab = Window:CreateTab("Teleport", 4483362458) -- Title, Image
+
 local Section = Tab:CreateSection("Teleport options")
 
 Tab:CreateInput({
