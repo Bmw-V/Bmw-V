@@ -274,7 +274,11 @@ end
 
 local chosenName = ""
 
-local tab = CreateTab("Secret (beta)", 4483362458)
+local Tab = Window:CreateTab({
+   Name = 'Tp',
+   Icon = 0,
+   Etc = 'more stuff idk,
+}) -- Title, Image
 
 tab:CreateInput({
     Name = "Player Display Name",
