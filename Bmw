@@ -92,66 +92,6 @@ local Button = Tab:CreateButton({
 
 local Section = Tab:CreateSection("Teleport still in beta",false) -- The 2nd argument is to tell if its only a Title and doesnt contain element
 
-local Players = game:GetService("Players")
-local lp = Players.LocalPlayer
-
-local function findClosestMatch(input)
-    if not input or input == "" then return nil end
-    input = input:lower()
-    local bestMatch, bestScore = nil, 0
-    for _, plr in ipairs(Players:GetPlayers()) do
-        if plr ~= lp then -- Skip local player
-            local name = plr.Name:lower() -- Using Name instead of DisplayName for more reliable matching
-            local displayName = plr.DisplayName:lower()
-            local score = #input
-            if (name:sub(1, #input) == input or displayName:sub(1, #input) == input) and score > bestScore then
-                bestMatch, bestScore = plr, score
-            end
-        end
-    end
-    return bestMatch
-end
-
-local chosenName = ""
-
-local Input = Tab:CreateInput({
-   Name = "Player name",
-   CurrentValue = "",
-   PlaceholderText = "Name",
-   RemoveTextAfterFocusLost = false,
-   Flag = "Input1",
-   Callback = function(Text)
-       chosenName = Text -- Fixed: was using lowercase 'text' instead of 'Text'
-   end,
-})
-
-local Button = Tab:CreateButton({
-   Name = "Teleport",
-   Callback = function()
-       if not lp.Character or not lp.Character:FindFirstChild("HumanoidRootPart") then return end
-       
-       local target = findClosestMatch(chosenName)
-       if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
-           lp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(0,3,0)
-           
-       else
-           Rayfield:Notify({
-               Title = "Teleport Failed",
-               Content = "Could not find target player or their character",
-               Duration = 6.5,
-               Image = 0,
-               Actions = {
-                   Ignore = {
-                       Name = "Okay",
-                       Callback = function()
-                       end
-                   },
-               },
-           })
-       end
-   end,
-})
-
 local Tab = Window:CreateTab("Other scripts", 4483362458) -- Title, Image
 
 local Section = Tab:CreateSection("👑admin commands👑")
