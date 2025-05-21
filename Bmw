@@ -323,4 +323,4 @@ Tab:CreateButton({
 
 updatePlayerList()
 Players.PlayerAdded:Connect(updatePlayerList)
-Players.PlayerRemoved:Connect(function(player) if player == _G.Target then _G.Target = nil end updatePlayerList() end)
+game:GetService("Players").PlayerAdded:Connect(updatePlayerList)
