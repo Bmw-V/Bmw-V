@@ -114,9 +114,6 @@ end
 
 local chosenName = ""
 
--- Player list section
-TeleportTab:CreateSection("Online Players")
-
 -- Function to update player list
 local function updatePlayerList()
     for _, player in ipairs(Players:GetPlayers()) do
