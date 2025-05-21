@@ -115,33 +115,6 @@ end
 local chosenName = ""
 
 local playerInput = TeleportTab:CreateInput({
-    Name = "Player Name/Display Name",
-    PlaceholderText = "Type player name...",
-    RemoveTextAfterFocusLost = false,
-    Callback = function(text)
-        if text == "" then 
-            selectedPlayer = nil
-            return 
-        end
-        
-        local matchedPlayer = findBestMatch(text)
-        if matchedPlayer then
-            selectedPlayer = matchedPlayer
-            Rayfield:Notify({
-                Title = "Player Found",
-                Content = "Matched: "..matchedPlayer.Name.." (@@"..matchedPlayer.DisplayName..")",
-                Duration = 3,
-            })
-        else
-            Rayfield:Notify({
-                Title = "No Match",
-                Content = "No player found matching: "..text,
-                Duration = 3,
-            })
-            selectedPlayer = nil
-        end
-    end,
-})
 
 -- Teleport to player button
 TeleportTab:CreateButton({
