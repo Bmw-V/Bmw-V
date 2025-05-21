@@ -114,7 +114,6 @@ end
 
 local chosenName = ""
 
-local selectedPlayer = nil
 local playerInput = TeleportTab:CreateInput({
     Name = "Player Name/Display Name",
     PlaceholderText = "Type player name...",
