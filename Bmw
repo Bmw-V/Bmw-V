@@ -115,31 +115,6 @@ end
 local chosenName = ""
 
 -- Function to update player list
-local function updatePlayerList()
-    for _, player in ipairs(Players:GetPlayers()) do
-        if player ~= lp then
-            TeleportTab:CreateButton({
-                Name = player.Name.." (@@"..player.DisplayName..")",
-                Callback = function()
-                    selectedPlayer = player
-                    playerInput:Set(player.Name)
-                    Rayfield:Notify({
-                        Title = "Player Selected",
-                        Content = "Selected: "..player.Name.." (@@"..player.DisplayName..")",
-                        Duration = 3,
-                    })
-                end,
-            })
-        end
-    end
-end
-
--- Initial player list
-updatePlayerList()
-
--- Update when players join/leave
-Players.PlayerAdded:Connect(updatePlayerList)
-Players.PlayerRemoved:Connect(updatePlayerList)
 
 local Tab = Window:CreateTab("Other scripts", 4483362458) -- Title, Image
 
