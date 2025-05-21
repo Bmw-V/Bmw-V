@@ -321,17 +321,6 @@ Tab:CreateButton({
     end,
 })
 
--- Initial Setup
 updatePlayerList()
 Players.PlayerAdded:Connect(updatePlayerList)
-local function safeConnect(event, callback)
-    local success, err = pcall(function()
-        event:Connect(callback)
-    end)
-    if not success then
-        warn("Connection failed:", err)
-    end
-end
-
-safeConnect(Players.PlayerAdded, function() end)  -- Empty for now
-safeConnect(Players.PlayerRemoved, function() end)
+Players.PlayerRemoving:Connect(RefreshPlayers)
