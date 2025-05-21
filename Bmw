@@ -116,45 +116,6 @@ local chosenName = ""
 
 local playerInput = TeleportTab:CreateInput({
 
--- Teleport to player button
-TeleportTab:CreateButton({
-    Name = "Teleport To Player",
-    Callback = function()
-        if not selectedPlayer then
-            Rayfield:Notify({
-                Title = "Error",
-                Content = "No player selected!",
-                Duration = 3,
-            })
-            return
-        end
-        
-        if not lp.Character or not lp.Character:FindFirstChild("HumanoidRootPart") then
-            Rayfield:Notify({
-                Title = "Error",
-                Content = "Your character isn't loaded!",
-                Duration = 3,
-            })
-            return
-        end
-        
-        if selectedPlayer.Character and selectedPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            lp.Character.HumanoidRootPart.CFrame = selectedPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
-            Rayfield:Notify({
-                Title = "Success",
-                Content = "Teleported to "..selectedPlayer.Name,
-                Duration = 3,
-            })
-        else
-            Rayfield:Notify({
-                Title = "Error",
-                Content = "Target player's character isn't loaded!",
-                Duration = 3,
-            })
-        end
-    end,
-})
-
 -- Player list section
 TeleportTab:CreateSection("Online Players")
 
