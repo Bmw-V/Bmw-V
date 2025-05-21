@@ -114,8 +114,6 @@ end
 
 local chosenName = ""
 
-local playerInput = TeleportTab:CreateInput({
-
 -- Player list section
 TeleportTab:CreateSection("Online Players")
 
