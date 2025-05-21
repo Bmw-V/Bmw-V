@@ -90,7 +90,7 @@ local Button = Tab:CreateButton({
    end,
 })
 
-local Section = Tab:CreateSection("Teleport still in beta",false) -- The 2nd argument is to tell if its only a Title and doesnt contain element
+local Tab = Window:CreateTab("Teleport", 0)
 
 local Players = game:GetService("Players")
 local lp = Players.LocalPlayer
