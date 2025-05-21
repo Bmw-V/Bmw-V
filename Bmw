@@ -96,99 +96,6 @@ local Players = game:GetService("Players")
 local lp = Players.LocalPlayer
 
 -- Main Functions
-local function findPlayer(input)
-    input = input:lower()
-    for _, player in pairs(Players:GetPlayers()) do
-        if player ~= lp and (player.Name:lower():find(input) or player.DisplayName:lower():find(input)) then
-            return player
-        end
-    end
-end
-
--- UI Elements
-local Tab = Window:CreateTab("Teleport", 0)
-
-local playerInput = Tab:CreateInput({
-    Name = "Search Player",
-    PlaceholderText = "Type name or click below...",
-    Callback = function(Text)
-        _G.Target = findPlayer(Text)
-    end,
-})
-
--- Player List Section
-Tab:CreateSection("Online Players")
-
-local function updatePlayerList()
-    for _, player in pairs(Players:GetPlayers()) do
-        if player ~= lp then
-            Tab:CreateButton({
-                Name = player.Name .. " (@@" .. player.DisplayName .. ")",
-                Callback = function()
-                    _G.Target = player
-                    playerInput:Set(player.Name)
-                    Rayfield:Notify({
-                        Title = "Selected",
-                        Content = "Ready to teleport to: " .. player.Name,
-                        Duration = 2
-                    })
-                end,
-            })
-        end
-    end
-end
-
--- Teleport Action
-Tab:CreateButton({
-    Name = "TELEPORT TO PLAYER",
-    Callback = function()
-        if not _G.Target then
-            Rayfield:Notify({
-                Title = "Error",
-                Content = "No player selected!",
-                Duration = 3
-            })
-            return
-        end
-
-        if lp.Character and _G.Target.Character then
-            lp.Character.HumanoidRootPart.CFrame = 
-                _G.Target.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
-            Rayfield:Notify({
-                Title = "Success",
-                Content = "Teleported to " .. _G.Target.Name,
-                Duration = 3
-            })
-        end
-    end,
-})
-
--- Initial Setup
-updatePlayerList()
-Players.PlayerAdded:Connect(updatePlayerList)
-Players.PlayerRemoved:Connect(updatePlayerList)
-
-local Players = game:GetService("Players")
-local lp = Players.LocalPlayer
-
-local function findClosestMatch(input)
-    if not input or input == "" then return nil end
-    input = input:lower()
-    local bestMatch, bestScore = nil, 0
-    for _, plr in ipairs(Players:GetPlayers()) do
-        if plr ~= lp then -- Skip local player
-            local name = plr.Name:lower() -- Using Name instead of DisplayName for more reliable matching
-            local displayName = plr.DisplayName:lower()
-            local score = #input
-            if (name:sub(1, #input) == input or displayName:sub(1, #input) == input) and score > bestScore then
-                bestMatch, bestScore = plr, score
-            end
-        end
-    end
-    return bestMatch
-end
-
-local chosenName = ""
 
 -- Function to update player list
 
@@ -342,3 +249,79 @@ local Button = Tab:CreateButton({
 })
    end,
 })
+
+local Players = game:GetService("Players")
+local lp = Players.LocalPlayer
+
+-- Main Functions
+local function findPlayer(input)
+    input = input:lower()
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= lp and (player.Name:lower():find(input) or player.DisplayName:lower():find(input)) then
+            return player
+        end
+    end
+end
+
+-- UI Elements
+local Tab = Window:CreateTab("Teleport", 0)
+
+local playerInput = Tab:CreateInput({
+    Name = "Search Player",
+    PlaceholderText = "Type name or click below...",
+    Callback = function(Text)
+        _G.Target = findPlayer(Text)
+    end,
+})
+
+-- Player List Section
+Tab:CreateSection("Online Players")
+
+local function updatePlayerList()
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= lp then
+            Tab:CreateButton({
+                Name = player.Name .. " (@@" .. player.DisplayName .. ")",
+                Callback = function()
+                    _G.Target = player
+                    playerInput:Set(player.Name)
+                    Rayfield:Notify({
+                        Title = "Selected",
+                        Content = "Ready to teleport to: " .. player.Name,
+                        Duration = 2
+                    })
+                end,
+            })
+        end
+    end
+end
+
+-- Teleport Action
+Tab:CreateButton({
+    Name = "TELEPORT TO PLAYER",
+    Callback = function()
+        if not _G.Target then
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "No player selected!",
+                Duration = 3
+            })
+            return
+        end
+
+        if lp.Character and _G.Target.Character then
+            lp.Character.HumanoidRootPart.CFrame = 
+                _G.Target.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
+            Rayfield:Notify({
+                Title = "Success",
+                Content = "Teleported to " .. _G.Target.Name,
+                Duration = 3
+            })
+        end
+    end,
+})
+
+-- Initial Setup
+updatePlayerList()
+Players.PlayerAdded:Connect(updatePlayerList)
+Players.PlayerRemoved:Connect(updatePlayerList)
