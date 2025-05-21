@@ -114,42 +114,104 @@ end
 
 local chosenName = ""
 
-local Input = Tab:CreateInput({
-   Name = "Enter the users name that you want to go to",
-   CurrentValue = "",
-   PlaceholderText = "Player Name",
-   RemoveTextAfterFocusLost = false,
-   Flag = "Input1",
-   Callback = function(Text)
-       chosenName = Text -- Fixed: was using lowercase 'text' instead of 'Text'
-   end,
+local selectedPlayer = nil
+local playerInput = TeleportTab:CreateInput({
+    Name = "Player Name/Display Name",
+    PlaceholderText = "Type player name...",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(text)
+        if text == "" then 
+            selectedPlayer = nil
+            return 
+        end
+        
+        local matchedPlayer = findBestMatch(text)
+        if matchedPlayer then
+            selectedPlayer = matchedPlayer
+            Rayfield:Notify({
+                Title = "Player Found",
+                Content = "Matched: "..matchedPlayer.Name.." (@@"..matchedPlayer.DisplayName..")",
+                Duration = 3,
+            })
+        else
+            Rayfield:Notify({
+                Title = "No Match",
+                Content = "No player found matching: "..text,
+                Duration = 3,
+            })
+            selectedPlayer = nil
+        end
+    end,
 })
 
-local Button = Tab:CreateButton({
-   Name = "Teleport",
-   Callback = function()
-       if not lp.Character or not lp.Character:FindFirstChild("HumanoidRootPart") then return end
-       
-       local target = findClosestMatch(chosenName)
-       if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
-           lp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(0,3,0)
-       else
-           Rayfield:Notify({
-               Title = "Teleport Failed",
-               Content = "Could not find target player or their character",
-               Duration = 6.5,
-               Image = 0,
-               Actions = {
-                   Ignore = {
-                       Name = "Okay",
-                       Callback = function()
-                       end
-                   },
-               },
-           })
-       end
-   end,
+-- Teleport to player button
+TeleportTab:CreateButton({
+    Name = "Teleport To Player",
+    Callback = function()
+        if not selectedPlayer then
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "No player selected!",
+                Duration = 3,
+            })
+            return
+        end
+        
+        if not lp.Character or not lp.Character:FindFirstChild("HumanoidRootPart") then
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "Your character isn't loaded!",
+                Duration = 3,
+            })
+            return
+        end
+        
+        if selectedPlayer.Character and selectedPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            lp.Character.HumanoidRootPart.CFrame = selectedPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
+            Rayfield:Notify({
+                Title = "Success",
+                Content = "Teleported to "..selectedPlayer.Name,
+                Duration = 3,
+            })
+        else
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "Target player's character isn't loaded!",
+                Duration = 3,
+            })
+        end
+    end,
 })
+
+-- Player list section
+TeleportTab:CreateSection("Online Players")
+
+-- Function to update player list
+local function updatePlayerList()
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= lp then
+            TeleportTab:CreateButton({
+                Name = player.Name.." (@@"..player.DisplayName..")",
+                Callback = function()
+                    selectedPlayer = player
+                    playerInput:Set(player.Name)
+                    Rayfield:Notify({
+                        Title = "Player Selected",
+                        Content = "Selected: "..player.Name.." (@@"..player.DisplayName..")",
+                        Duration = 3,
+                    })
+                end,
+            })
+        end
+    end
+end
+
+-- Initial player list
+updatePlayerList()
+
+-- Update when players join/leave
+Players.PlayerAdded:Connect(updatePlayerList)
+Players.PlayerRemoved:Connect(updatePlayerList)
 
 local Tab = Window:CreateTab("Other scripts", 4483362458) -- Title, Image
 
