@@ -252,7 +252,7 @@ local Button = Tab:CreateButton({
 local Section = Tab:CreateSection("Solara v3 Beta")
 
 local Button = Tab:CreateButton({
-   Name = "Krnl",
+   Name = "SolaraV3",
    Callback = function()
    -- Solara v3 (Beta) UI
 local plr = game.Players.LocalPlayer
