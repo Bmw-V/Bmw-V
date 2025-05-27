@@ -249,6 +249,140 @@ local Button = Tab:CreateButton({
    end,
 })
 
+local Section = Tab:CreateSection("Solara v3 Beta")
+
+local Button = Tab:CreateButton({
+   Name = "Krnl",
+   Callback = function()
+   -- Solara v3 (Beta) UI
+local plr = game.Players.LocalPlayer
+local gui = Instance.new("ScreenGui", plr:WaitForChild("PlayerGui"))
+gui.ResetOnSpawn = false
+
+local attached = false
+
+-- Main Frame
+local main = Instance.new("Frame")
+main.Size = UDim2.new(0, 600, 0, 250)
+main.Position = UDim2.new(0.5, -300, 0.5, -125)
+main.BackgroundColor3 = Color3.fromRGB(30,30,30)
+main.Parent = gui
+main.Active = true
+main.Draggable = true
+
+-- Attach Status Button (Red/Green)
+local statusBtn = Instance.new("TextButton", main)
+statusBtn.Size = UDim2.new(0, 15, 0, 15)
+statusBtn.Position = UDim2.new(0, 5, 0, 5)
+statusBtn.BackgroundColor3 = Color3.fromRGB(255,0,0)
+statusBtn.BorderSizePixel = 0
+statusBtn.Text = ""
+Instance.new("UICorner", statusBtn).CornerRadius = UDim.new(1,0)
+
+-- Solara Name Label
+local nameLbl = Instance.new("TextLabel", main)
+nameLbl.Position = UDim2.new(0, 25, 0, 2)
+nameLbl.Size = UDim2.new(0, 200, 0, 20)
+nameLbl.BackgroundTransparency = 1
+nameLbl.Text = "SolaraV3 (Beta)"
+nameLbl.Font = Enum.Font.SourceSansBold
+nameLbl.TextSize = 18
+nameLbl.TextColor3 = Color3.fromRGB(255,255,255)
+nameLbl.TextXAlignment = Enum.TextXAlignment.Left
+
+-- Script Input
+local scriptBox = Instance.new("TextBox", main)
+scriptBox.Size = UDim2.new(1, -10, 1, -60)
+scriptBox.Position = UDim2.new(0, 5, 0, 30)
+scriptBox.ClearTextOnFocus = false
+scriptBox.MultiLine = true
+scriptBox.TextXAlignment = Enum.TextXAlignment.Left
+scriptBox.TextYAlignment = Enum.TextYAlignment.Top
+scriptBox.Text = ""
+scriptBox.Font = Enum.Font.Code
+scriptBox.TextSize = 14
+scriptBox.TextColor3 = Color3.fromRGB(255,255,255)
+scriptBox.BackgroundColor3 = Color3.fromRGB(35,35,35)
+
+-- Execute Button
+local exec = Instance.new("TextButton", main)
+exec.Size = UDim2.new(0, 70, 0, 25)
+exec.Position = UDim2.new(0, 5, 1, -30)
+exec.Text = "Execute"
+exec.BackgroundColor3 = Color3.fromRGB(0, 100, 0)
+exec.TextColor3 = Color3.fromRGB(255,255,255)
+
+-- Clear Button
+local clear = Instance.new("TextButton", main)
+clear.Size = UDim2.new(0, 70, 0, 25)
+clear.Position = UDim2.new(0, 80, 1, -30)
+clear.Text = "Clear"
+clear.BackgroundColor3 = Color3.fromRGB(100, 100, 0)
+clear.TextColor3 = Color3.fromRGB(255,255,255)
+
+-- Attach Button (Bottom Right)
+local attachBtn = Instance.new("TextButton", main)
+attachBtn.Size = UDim2.new(0, 70, 0, 25)
+attachBtn.Position = UDim2.new(1, -75, 1, -30)
+attachBtn.Text = "Attach"
+attachBtn.TextColor3 = Color3.fromRGB(255,255,255)
+attachBtn.BackgroundColor3 = Color3.fromRGB(60,60,60)
+
+-- Small GUI ("S" Button)
+local small = Instance.new("TextButton", gui)
+small.Size = UDim2.new(0, 50, 0, 50)
+small.Position = UDim2.new(0, 10, 0.5, -25)
+small.BackgroundColor3 = Color3.fromRGB(50,50,50)
+small.Text = "S"
+small.TextColor3 = Color3.fromRGB(255,255,255)
+small.Visible = false
+small.Draggable = true
+small.BorderSizePixel = 0
+Instance.new("UICorner", small).CornerRadius = UDim.new(1,0)
+
+-- Close Button (Top Right)
+local close = Instance.new("TextButton", main)
+close.Size = UDim2.new(0, 25, 0, 25)
+close.Position = UDim2.new(1, -25, 0, 0)
+close.Text = "X"
+close.TextColor3 = Color3.fromRGB(255,255,255)
+close.BackgroundColor3 = Color3.fromRGB(100,0,0)
+
+-- Button Logic
+attachBtn.MouseButton1Click:Connect(function()
+	if not attached then
+		attached = true
+		statusBtn.BackgroundColor3 = Color3.fromRGB(0,255,0)
+		attachBtn.Text = "Attached"
+		attachBtn.BackgroundColor3 = Color3.fromRGB(0,255,0)
+	else
+		local old = nameLbl.Text
+		nameLbl.Text = "Already attached"
+		task.wait(6)
+		nameLbl.Text = old
+	end
+end)
+
+exec.MouseButton1Click:Connect(function()
+	loadstring(scriptBox.Text)()
+end)
+
+clear.MouseButton1Click:Connect(function()
+	scriptBox.Text = ""
+end)
+
+close.MouseButton1Click:Connect(function()
+	main.Visible = false
+	small.Visible = true
+end)
+
+small.MouseButton1Click:Connect(function()
+	main.Visible = true
+	small.Visible = false
+end)
+   end,
+})
+
 local Tab = Window:CreateTab("Settings", 4483362458) -- Title, Image
 
 local Section = Tab:CreateSection("Credits")
