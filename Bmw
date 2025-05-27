@@ -90,6 +90,117 @@ local Button = Tab:CreateButton({
    end,
 })
 
+local Section = Tab:CreateSection("Infinite Jump")
+
+-- Variable to track toggle state
+local infiniteJumpEnabled = false
+
+-- Create Toggle using Rayfield inside the Section (Rayfield toggles don’t belong to sections directly, so just create under tab)
+local InfiniteJumpToggle = Tab:CreateToggle({
+    Name = "Infinite Jump",
+    CurrentValue = false,
+    Flag = "InfiniteJumpToggle",
+    Callback = function(value)
+        infiniteJumpEnabled = value
+    end
+})
+
+-- Connect jump request to infinite jump toggle
+game:GetService("UserInputService").JumpRequest:Connect(function()
+    if infiniteJumpEnabled then
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        if character and character:FindFirstChild("Humanoid") then
+            character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+        end
+    end
+end)
+
+local Button = Tab:CreateButton({
+   Name = "Inf jump ui",
+   Interact = 'Click',
+   Callback = function()
+    -- Create ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "InfiniteJumpToggleGui"
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create the frame (button)
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 140, 0, 50)  -- wider width
+frame.Position = UDim2.new(0.5, -70, 0.5, -25) -- center
+frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+frame.BorderSizePixel = 1
+frame.Parent = screenGui
+
+-- Make frame draggable
+frame.Active = true
+frame.Draggable = true
+
+-- Circle indicator label
+local circleLabel = Instance.new("TextLabel")
+circleLabel.Size = UDim2.new(0, 30, 1, 0)
+circleLabel.Position = UDim2.new(0, 5, 0, 0)
+circleLabel.BackgroundTransparency = 1
+circleLabel.TextColor3 = Color3.new(1, 1, 1)
+circleLabel.TextScaled = true
+circleLabel.Font = Enum.Font.SourceSansBold
+circleLabel.Text = "○"
+circleLabel.Parent = frame
+
+-- Text label for toggle
+local label = Instance.new("TextLabel")
+label.Size = UDim2.new(1, -40, 1, 0)
+label.Position = UDim2.new(0, 40, 0, 0)
+label.BackgroundTransparency = 1
+label.TextColor3 = Color3.new(1, 1, 1)
+label.TextScaled = true
+label.Font = Enum.Font.SourceSansBold
+label.Text = "Infinite Jump"
+label.TextXAlignment = Enum.TextXAlignment.Left
+label.Parent = frame
+
+-- Infinite Jump logic
+local infiniteJumpEnabled = false
+
+local function updateToggleUI()
+    if infiniteJumpEnabled then
+        circleLabel.Text = "●"
+        label.TextColor3 = Color3.fromRGB(100, 255, 100) -- green text when on
+    else
+        circleLabel.Text = "○"
+        label.TextColor3 = Color3.new(1, 1, 1) -- white text when off
+    end
+end
+
+function toggleInfiniteJump()
+    infiniteJumpEnabled = not infiniteJumpEnabled
+    updateToggleUI()
+end
+
+-- Connect JumpRequest for infinite jump
+game:GetService("UserInputService").JumpRequest:Connect(function()
+    if infiniteJumpEnabled then
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        if character and character:FindFirstChild("Humanoid") then
+            character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+        end
+    end
+end)
+
+-- Toggle on click or tap
+frame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        toggleInfiniteJump()
+    end
+end)
+
+-- Initialize UI
+updateToggleUI()
+   end,
+})
+
 local Tab = Window:CreateTab("Teleport", 0)
 
 local Players = game:GetService("Players")
