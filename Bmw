@@ -302,7 +302,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/AnnaRoblox/AnnaBypass
    end,
 })
 
-local Tab = Window:CreateTab("grow a garden", 4483362458) -- Title, Image
+local Tab = Window:CreateTab("Grow a Garden", 4483362458) -- Title, Image
 
 -- Custom trim function
 local function trimString(str)
@@ -313,7 +313,7 @@ end
 local seedName = ""
 
 -- Seed Input
-local SeedInput = MainTab:CreateInput({
+local SeedInput = Tab:CreateInput({  -- Changed from MainTab to Tab
     Name = "Enter Seed Name",
     PlaceholderText = "e.g. Mango, Apple, Orange",
     RemoveTextAfterFocusLost = false,
