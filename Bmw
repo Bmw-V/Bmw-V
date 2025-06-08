@@ -302,6 +302,117 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/AnnaRoblox/AnnaBypass
    end,
 })
 
+-- GARDEN SPAWNER TAB
+local GardenTab = Window:CreateTab("Grow a garden", 4483362458)
+
+-- Custom trim function
+local function trimString(str)
+    return (str or ""):gsub("^%s*(.-)%s*$", "%1")
+end
+
+-- Seed name storage
+local seedName = ""
+
+-- Seed Input
+GardenTab:CreateInput({
+    Name = "Enter Seed Name",
+    PlaceholderText = "e.g. Mango, Apple, Orange",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(Text)
+        seedName = type(Text) == "string" and trimString(Text:gsub("%s+", " ")) or ""
+    end,
+})
+
+-- Enhanced spawn function
+local function spawnSeedToInventory()
+    if type(seedName) ~= "string" or #seedName == 0 then
+        return false, "Please enter a valid seed name"
+    end
+
+    local formattedName = seedName:gsub("^%l", string.upper)
+
+    local rs = game:GetService("ReplicatedStorage")
+    local seedModels = rs:FindFirstChild("Seed_Models")
+    if not seedModels then
+        return false, "Seed_Models folder not found in ReplicatedStorage"
+    end
+
+    local seedModel
+    for _, child in ipairs(seedModels:GetChildren()) do
+        if child.Name:lower() == formattedName:lower() then
+            seedModel = child
+            formattedName = child.Name
+            break
+        end
+    end
+
+    if not seedModel then
+        return false, "Seed '"..formattedName.."' not found"
+    end
+
+    local backpack = player:FindFirstChild("Backpack") or player:WaitForChild("Backpack", 2)
+    if not backpack then
+        return false, "Could not access Backpack"
+    end
+
+    local existingSeed
+    for _, item in ipairs(backpack:GetChildren()) do
+        if item.Name:match("^"..formattedName.." Seed") then
+            existingSeed = item
+            break
+        end
+    end
+
+    if existingSeed then
+        local currentCount = tonumber(existingSeed.Name:match("x(%d+)$")) or 1
+        local newCount = currentCount + 1
+        existingSeed.Name = formattedName.." Seed"..(newCount > 1 and (" x"..newCount) or "")
+
+        local countValue = existingSeed:FindFirstChild("Count") or Instance.new("IntValue")
+        countValue.Name = "Count"
+        countValue.Value = newCount
+        countValue.Parent = existingSeed
+
+        return true, "Added to stack (now x"..newCount..")"
+    else
+        local newSeed = seedModel:Clone()
+
+        if not newSeed:IsA("Tool") then
+            local tool = Instance.new("Tool")
+            tool.Name = formattedName.." Seed"
+            tool.Parent = backpack
+            newSeed.Parent = tool
+            newSeed.Name = "Handle"
+        else
+            newSeed.Name = formattedName.." Seed"
+            newSeed.Parent = backpack
+        end
+
+        return true, "Seed added to inventory"
+    end
+end
+
+-- Spawn Button
+GardenTab:CreateButton({
+    Name = "Spawn Seed",
+    Callback = function()
+        local success, result = pcall(spawnSeedToInventory)
+
+        Rayfield:Notify({
+            Title = success and "Success" or "Error",
+            Content = type(result) == "string" and result or "Unknown error occurred",
+            Duration = 6.5,
+            Image = 4483362458,
+            Actions = {
+                Ignore = {
+                    Name = "Okay",
+                    Callback = function() end
+                },
+            },
+        })
+    end,
+})
+
 local Tab = Window:CreateTab("Game scripts", 4483362458) -- Title, Image
 
 local Section = Tab:CreateSection("👾Bedwars👾")
