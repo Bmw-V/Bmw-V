@@ -302,24 +302,97 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/AnnaRoblox/AnnaBypass
    end,
 })
 
-local Tab = Window:CreateTab("Grow a Garden", 4483362458) -- Title, Image
+local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
+
+local Window = Rayfield:CreateWindow({
+    Name = "Grow A Garden V3",
+    LoadingTitle = "Loading Grow A Garden",
+    LoadingSubtitle = "Powered by Rayfield",
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = "GrowGardenConfig",
+        FileName = "GardenSettings"
+    },
+    KeySystem = false
+})
+
+local Tab = Window:CreateTab("Grow A Garden", 4483362458)
 
 -- Custom trim function
 local function trimString(str)
-    return str:gsub("^%s*(.-)%s*$", "%1")
+    return (str or ""):gsub("^%s*(.-)%s*$", "%1")
 end
 
--- Seed name storage
+-- SEED VARIABLES
 local seedName = ""
 
 -- Seed Input
-local SeedInput = Tab:CreateInput({  -- Changed from MainTab to Tab
+local SeedInput = Tab:CreateInput({
     Name = "Enter Seed Name",
     PlaceholderText = "e.g. Mango, Apple, Orange",
     RemoveTextAfterFocusLost = false,
     Callback = function(Text)
         seedName = type(Text) == "string" and trimString(Text:gsub("%s+", " ")) or ""
     end,
+})
+
+-- Spawn Seed Button
+Tab:CreateButton({
+    Name = "Spawn Seed",
+    Callback = function()
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local Players = game:GetService("Players")
+        local player = Players.LocalPlayer
+        local backpack = player:WaitForChild("Backpack")
+
+        if seedName == "" then
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "No seed name provided.",
+                Duration = 6,
+                Image = 4483362458
+            })
+            return
+        end
+
+        local seedModel = ReplicatedStorage.Seed_Models:FindFirstChild(seedName)
+        if not seedModel then
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "Seed '"..seedName.."' not found.",
+                Duration = 6,
+                Image = 4483362458
+            })
+            return
+        end
+
+        -- Stack count
+        local count = 1
+        for _, item in ipairs(backpack:GetChildren()) do
+            if item.Name:match("^"..seedName.." x(%d+)$") then
+                local current = tonumber(item.Name:match("x(%d+)")) or 1
+                if current >= count then
+                    count = current + 1
+                end
+            elseif item.Name == seedName then
+                count = 2
+            end
+        end
+
+        local newSeed = seedModel:Clone()
+        local tool = Instance.new("Tool")
+        tool.RequiresHandle = false
+        tool.Name = (count == 1) and seedName or (seedName.." x"..count)
+        newSeed.Parent = tool
+        tool.Parent = backpack
+
+        Rayfield:Notify({
+            Title = "Success",
+            Content = "Spawned "..tool.Name,
+            Duration = 6,
+            Image = 4483362458
+        })
+    end
 })
 
 -- Enhanced spawn function
