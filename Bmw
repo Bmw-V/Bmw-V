@@ -302,20 +302,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/AnnaRoblox/AnnaBypass
    end,
 })
 
-local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
-
-local Window = Rayfield:CreateWindow({
-    Name = "Grow A Garden V3",
-    LoadingTitle = "Loading Grow A Garden",
-    LoadingSubtitle = "Powered by Rayfield",
-    ConfigurationSaving = {
-        Enabled = true,
-        FolderName = "GrowGardenConfig",
-        FileName = "GardenSettings"
-    },
-    KeySystem = false
-})
-
 local Tab = Window:CreateTab("Grow A Garden", 4483362458)
 
 -- Custom trim function
